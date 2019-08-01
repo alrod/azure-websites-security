@@ -40,7 +40,13 @@ namespace Microsoft.Azure.Web.DataProtection
      
         public byte[] ResolveKey(Guid keyId)
         {
+            Console.WriteLine($"AzureWebsitesXmlRepository, IsDefaultKey={IsDefaultKey(keyId)}");
+            Console.WriteLine($"AzureWebsitesXmlRepository, GetDefaultKeyValue={GetDefaultKeyValue()}");
+            Console.WriteLine($"AzureWebsitesXmlRepository, GetEnvironmentKey={GetEnvironmentKey(keyId)}");
+
             string keyValue = IsDefaultKey(keyId) ? GetDefaultKeyValue() : GetEnvironmentKey(keyId);
+
+            Console.WriteLine($"AzureWebsitesXmlRepository, keyValue={keyValue}");
 
             if (keyValue != null)
             {

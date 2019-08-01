@@ -18,7 +18,7 @@ namespace Microsoft.Azure.Web.DataProtection
     {
         internal static Guid DefaultKeyId = Guid.Parse(DefaultEncryptionKeyId);
 
-        public static byte[] ConvertHexToByteArray(string keyValue) 
+        public static byte[] ConvertHexToByteArray(string keyValue)
             => Enumerable.Range(0, keyValue.Length / 2)
             .Select(b => Convert.ToByte(keyValue.Substring(b * 2, 2), 16))
             .ToArray();
@@ -34,7 +34,14 @@ namespace Microsoft.Azure.Web.DataProtection
             }
         }
 
-        public static string GetDefaultKeyValue() => Environment.GetEnvironmentVariable(AzureWebsiteLocalEncryptionKey) ?? GetMachineConfigKey();
+        public static string GetDefaultKeyValue()
+        {
+            Console.WriteLine($"Util, Environment.GetEnvironmentVariable(AzureWebsiteLocalEncryptionKey)={Environment.GetEnvironmentVariable(AzureWebsiteLocalEncryptionKey)}");
+            Console.WriteLine($"Util, Environment.GetEnvironmentVariable(AzureWebsiteEnvironmentMachineKey)={Environment.GetEnvironmentVariable(AzureWebsiteEnvironmentMachineKey)}");
+            Console.WriteLine($"Util, GetMachineConfigKey()={GetMachineConfigKey()}");
+
+            return Environment.GetEnvironmentVariable(AzureWebsiteLocalEncryptionKey) ?? GetMachineConfigKey();
+        }
 
         internal static bool IsDefaultKey(Guid keyId) => DefaultKeyId == keyId;
 
